@@ -25,11 +25,8 @@ int main(int argc, char *argv[])
 
     initQss();//step 2
 
-//    Login l;
-//    l.show();
-
-    MainWindow w;
-    w.show();
+    Login l;
+    l.show();
 
     return a.exec();
 }

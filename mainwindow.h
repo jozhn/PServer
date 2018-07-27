@@ -1,5 +1,4 @@
-﻿void on_testButton_clicked();
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -22,8 +21,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-//    QImage *sourcePic;
-//    QImage *resultPic;
 };
 
 #endif // MAINWINDOW_H

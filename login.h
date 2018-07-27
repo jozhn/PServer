@@ -15,6 +15,10 @@ class Login : public QssDialog
 public:
     explicit Login(QWidget *parent = 0);
     ~Login();
+    QString strMd5(QString str);
+
+private slots:
+    void on_login_clicked();
 
 private:
     Ui::Login *ui;

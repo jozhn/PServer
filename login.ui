@@ -6,60 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>396</width>
-    <height>248</height>
+    <width>380</width>
+    <height>233</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>99</x>
-     <y>95</y>
-     <width>54</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>用户名</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>99</x>
-     <y>155</y>
-     <width>54</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>密码</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="usernameEdit">
-   <property name="geometry">
-    <rect>
-     <x>179</x>
-     <y>95</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="passwordEdit">
-   <property name="geometry">
-    <rect>
-     <x>179</x>
-     <y>155</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="title">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -76,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>200</y>
+     <y>180</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -84,8 +38,65 @@
    <property name="text">
     <string>登录</string>
    </property>
+   <property name="shortcut">
+    <string>Return</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="formLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>100</y>
+     <width>181</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="username">
+      <property name="text">
+       <string>用户名</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="usernameEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="password">
+      <property name="text">
+       <string>密码</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="passwordEdit">
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="warning">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>160</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>usernameEdit</tabstop>
+  <tabstop>passwordEdit</tabstop>
+  <tabstop>login</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

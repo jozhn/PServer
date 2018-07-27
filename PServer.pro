@@ -7,7 +7,7 @@
 QMAKE_CXXFLAGS+=-std=c++11
 CONFIG += c++11
 
-QT       += core gui network
+QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     thirdparty/mser/mser2.cpp \
     thirdparty/svm/corrected_svm.cpp \
     thirdparty/textDetect/erfilter.cpp \
-    thirdparty/xmlParser/xmlParser.cpp
+    thirdparty/xmlParser/xmlParser.cpp \
+    controller/database.cpp
 
 HEADERS  += mainwindow.h \
     qss/qss.h \
@@ -79,7 +80,8 @@ HEADERS  += mainwindow.h \
     thirdparty/mser/mser2.hpp \
     thirdparty/svm/precomp.hpp \
     thirdparty/textDetect/erfilter.hpp \
-    thirdparty/xmlParser/xmlParser.h
+    thirdparty/xmlParser/xmlParser.h \
+    controller/database.h
 
 FORMS    += mainwindow.ui \
     login.ui

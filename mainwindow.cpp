@@ -42,11 +42,6 @@ void MainWindow::on_testButton_clicked()
         ui->sourceLabel->setPixmap(QPixmap::fromImage(*sourcePic).scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         width = ui->resultLabel->width();height = ui->resultLabel->height();
         ui->resultLabel->setPixmap(QPixmap::fromImage(*resultPic).scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-//        sourcePic->load(r->sourcePath);
-//        QGraphicsScene *scene = new QGraphicsScene;
-//        scene->addPixmap(QPixmap::fromImage(*sourcePic));
-//        ui->capturePic->setScene(scene);
-//        ui->capturePic->show();
-//        ui->textEdit->append(r->resultPath);
+
     }
 }
