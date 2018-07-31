@@ -34,14 +34,18 @@
            <item row="0" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout">
              <item>
-              <widget class="QLabel" name="label">
+              <widget class="QLabel" name="portLabel">
                <property name="text">
                 <string>端口：</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit"/>
+              <widget class="QLineEdit" name="portEdit">
+               <property name="text">
+                <string>5234</string>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="startService">
@@ -54,13 +58,6 @@
               <widget class="QPushButton" name="stopService">
                <property name="text">
                 <string>停止</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="testButton">
-               <property name="text">
-                <string>一键测试</string>
                </property>
               </widget>
              </item>

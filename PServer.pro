@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     thirdparty/svm/corrected_svm.cpp \
     thirdparty/textDetect/erfilter.cpp \
     thirdparty/xmlParser/xmlParser.cpp \
-    controller/database.cpp
+    server.cpp \
+    serverthread.cpp
 
 HEADERS  += mainwindow.h \
     qss/qss.h \
@@ -81,7 +82,9 @@ HEADERS  += mainwindow.h \
     thirdparty/svm/precomp.hpp \
     thirdparty/textDetect/erfilter.hpp \
     thirdparty/xmlParser/xmlParser.h \
-    controller/database.h
+    controller/database.h \
+    server.h \
+    serverthread.h
 
 FORMS    += mainwindow.ui \
     login.ui

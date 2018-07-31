@@ -1,4 +1,4 @@
-/**
+﻿/**
 *	@file:	QssTtitleBar.h 
 *	@details:	css控件定制源文件，包括所有UI控件及自定义标题栏的主窗口，对话框及消息框
 *	@author: 	chenwen(chenwen1126@tom.com)
@@ -31,22 +31,22 @@ QssTtitleBar::QssTtitleBar(QWidget *parent , QTitleBar_Type type/* = QTitleBar_T
 
 	m_closeBtn = new QPushButton(this);//关闭按钮
 	m_closeBtn->setObjectName("titlebarclosebtn");//设置控件名称，方便css指定样式
-	m_closeBtn->setToolTip(QString::fromLocal8Bit("关闭"));
+    m_closeBtn->setToolTip("关闭");
 	m_closeBtn->setVisible(m_type & QTitleBar_Button_Close);
 
 	m_minBtn = new QPushButton(this);//最小化按钮
 	m_minBtn->setObjectName("titlebarminbtn");//设置控件名称，方便css指定样式
-	m_minBtn->setToolTip(QString::fromLocal8Bit("最小化"));
+    m_minBtn->setToolTip("最小化");
 	m_minBtn->setVisible(m_type & QTitleBar_Button_Min);
 
 	m_restoreBtn = new QPushButton(this);//最大化按钮，在最大化时隐藏
 	m_restoreBtn->setObjectName("titlebarrestorebtn");//设置控件名称，方便css指定样式
-	m_restoreBtn->setToolTip(QString::fromLocal8Bit("还原"));
+    m_restoreBtn->setToolTip("还原");
 	m_restoreBtn->setVisible(m_type & QTitleBar_Button_Restore);
 
 	m_maxBtn = new QPushButton(this);//恢复按钮，在normal时隐藏
 	m_maxBtn->setObjectName("titlebarmaxbtn");//设置控件名称，方便css指定样式
-	m_maxBtn->setToolTip(QString::fromLocal8Bit("最大化"));
+    m_maxBtn->setToolTip("最大化");
 	m_maxBtn->setVisible(m_type & QTitleBar_Button_Max);
 
 	m_iconBtn = new QPushButton(this);//标题栏图标
@@ -869,7 +869,7 @@ bool QssMessageBox::eventFilter( QObject * obj, QEvent * ev )
 	return QDialog::eventFilter(obj, ev);
 }
 
-QMessageBox::StandardButton QssMessageBox::tips( const QString & text, QWidget* parent /*= 0*/, const QString & title /*= QString::fromLocal8Bit("提示")*/, StandardButtons btn /*= QMessageBox::Ok*/ )
+QMessageBox::StandardButton QssMessageBox::tips( const QString & text, QWidget* parent /*= 0*/, const QString & title /*= "提示"*/, StandardButtons btn /*= QMessageBox::Ok*/ )
 {
 	QssMessageBox box(QMessageBox::Information, title, "\n" + text/* + "\n"*/, btn, parent);
 	box.setDefaultButton(QMessageBox::Ok);
@@ -884,7 +884,7 @@ QMessageBox::StandardButton QssMessageBox::tips( const QString & text, QWidget* 
 	return ret;
 }
 
-QMessageBox::StandardButton QssMessageBox::warn( const QString & text, QWidget* parent /*= 0*/, const QString & title /*= QString::fromLocal8Bit("警告")*/, StandardButtons btn /*= QMessageBox::Ok*/ )
+QMessageBox::StandardButton QssMessageBox::warn( const QString & text, QWidget* parent /*= 0*/, const QString & title /*= "警告"*/, StandardButtons btn /*= QMessageBox::Ok*/ )
 {
 	QssMessageBox box(QMessageBox::Warning, title, "\n" + text/* + "\n"*/ , btn, parent);
 	box.setDefaultButton(QMessageBox::Ok);
@@ -899,7 +899,7 @@ QMessageBox::StandardButton QssMessageBox::warn( const QString & text, QWidget* 
 	return ret;
 }
 
-QMessageBox::StandardButton QssMessageBox::error( const QString & text, QWidget* parent /*= 0*/, const QString & title /*= QString::fromLocal8Bit("错误")*/, StandardButtons btn /*= QMessageBox::Ok*/ )
+QMessageBox::StandardButton QssMessageBox::error( const QString & text, QWidget* parent /*= 0*/, const QString & title /*= "错误"*/, StandardButtons btn /*= QMessageBox::Ok*/ )
 {
 	QssMessageBox box(QMessageBox::Critical, title, "\n" + text/* + "\n"*/, btn, parent);
 	box.setDefaultButton(QMessageBox::Ok);
@@ -914,7 +914,7 @@ QMessageBox::StandardButton QssMessageBox::error( const QString & text, QWidget*
 	return ret;
 }
 
-QMessageBox::StandardButton QssMessageBox::ask( const QString & text, QWidget* parent /*= 0*/, const QString & title /*= QString::fromLocal8Bit("询问")*/, StandardButtons btn /*= QMessageBox::Yes | QMessageBox::No*/ )
+QMessageBox::StandardButton QssMessageBox::ask( const QString & text, QWidget* parent /*= 0*/, const QString & title /*= "询问"*/, StandardButtons btn /*= QMessageBox::Yes | QMessageBox::No*/ )
 {
 	QssMessageBox box(QMessageBox::Question, title, "\n" + text/* + "\n"*/, btn, parent);
 	box.setDefaultButton(QMessageBox::Yes);

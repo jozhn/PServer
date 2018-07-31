@@ -1,4 +1,4 @@
-/**
+﻿/**
 *	@file:		QssTtitleBar.h 
 *	@details:	css控件定制头文件，包括所有UI控件及自定义标题栏的主窗口，对话框及消息框
 *	@author: 	chenwen(chenwen1126@tom.com)
@@ -180,13 +180,13 @@ public:
 
 	/** 配合宏使用，更为简洁 */
 	static QMessageBox::StandardButton tips(const QString & text, QWidget* parent = 0, 
-		const QString & title = QString::fromLocal8Bit("提示"), StandardButtons btn = QMessageBox::Ok);
+        const QString & title = tr("提示"), StandardButtons btn = QMessageBox::Ok);
 	static QMessageBox::StandardButton warn(const QString & text, QWidget* parent = 0, 
-		const QString & title = QString::fromLocal8Bit("警告"), StandardButtons btn = QMessageBox::Ok);
+        const QString & title = tr("警告"), StandardButtons btn = QMessageBox::Ok);
 	static QMessageBox::StandardButton error(const QString & text, QWidget* parent = 0, 
-		const QString & title = QString::fromLocal8Bit("错误"), StandardButtons btn = QMessageBox::Ok);
+        const QString & title = tr("错误"), StandardButtons btn = QMessageBox::Ok);
 	static QMessageBox::StandardButton ask(const QString & text, QWidget* parent = 0, 
-		const QString & title = QString::fromLocal8Bit("询问"), StandardButtons btn = QMessageBox::Yes | QMessageBox::No);
+        const QString & title = tr("询问"), StandardButtons btn = QMessageBox::Yes | QMessageBox::No);
 
 	/** 覆盖定义，适配原有QMessageBox */
 	static StandardButton information(QWidget *parent, const QString &title,
@@ -203,12 +203,12 @@ public:
 		StandardButton defaultButton = QMessageBox::NoButton);
 
 	static QMessageBox::StandardButton regard(const QString & text, QWidget* parent = 0,
-		const QString & title = QString::fromLocal8Bit("关于"));
+        const QString & title = "关于");
 	static QMessageBox::StandardButton regard(const QString & text, QIcon icon, QWidget* parent = 0,
-		const QString & title = QString::fromLocal8Bit("关于"));
+        const QString & title = "关于");
 
 	static QMessageBox::StandardButton regardQt(QWidget* parent = 0, 
-		const QString & title = QString::fromLocal8Bit("关于Qt"));
+        const QString & title = "关于Qt");
 
 	static void about(QWidget *parent, const QString &title, const QString &text);
 	static void about(QWidget *parent, const QString &title, const QString &text, QIcon icon);

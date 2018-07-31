@@ -28,24 +28,23 @@ bool Recogize::rec(QString dir, QString f)
     vector<CPlate> plateVec;
     int result = pr.plateRecognize(src, plateVec);
     //int result = pr.plateRecognizeAsText(src, plateVec);
+
     if (result == 0) {
       size_t num = plateVec.size();
       for (size_t j = 0; j < num; j++) {
         String pstr = plateVec[j].getPlateStr();
         plateStr = QString::fromLocal8Bit(pstr.c_str());
-        if(plateStr.isEmpty())
-            return false;
-        plateColor = plateStr.section(":",0,0);
-        plateNum = plateStr.section(":",1,1);
-        resultPath = "E://result//"+f;
-        String rpath = String((const char *)resultPath.toLocal8Bit());
-        Mat plateMat = plateVec[j].getPlateMat();
-        imwrite(rpath,plateMat);
-      }
-      return true;
-    }
-    if (result != 0) {
-        cout << "result:" << result << endl;
+        if(!plateStr.isEmpty()){
+            plateColor = plateStr.section(":",0,0);
+            plateNum = plateStr.section(":",1,1);
+            resultPath = "E://result//"+f;
+            String rpath = String((const char *)resultPath.toLocal8Bit());
+            Mat plateMat = plateVec[j].getPlateMat();
+            imwrite(rpath,plateMat);
+            return true;
+        }
         return false;
+      }
     }
+    return false;
 }

@@ -23,33 +23,36 @@ Login::~Login()
 
 void Login::on_login_clicked()
 {
-    QString username = this->ui->usernameEdit->text();qDebug()<<username;
-    QString password = strMd5(this->ui->passwordEdit->text());qDebug()<<password;
-    try{
-        Database *d = new Database;
-        if(!d->connectDB()){
-            throw QString("no connection");
-            qDebug()<<"db error";
-        }
-        else{
-            QSqlQuery query(d->getDatabase());
-
-            QString sql = QString("select * from user where username='%1'").arg(username);
-            query.exec(sql);
-            while(query.next()){
-                if(query.value(2).toString() == password ){
-                    this->ui->warning->setText("登陆成功");
-                    this->hide();
-                    MainWindow *w = new MainWindow();
-                    w->show();
-                    break;
-                }else
-                    this->ui->warning->setText("密码错误");
+    if(this->ui->usernameEdit->text().isEmpty() || this->ui->passwordEdit->text().isEmpty()){
+        this->ui->warning->setText("请输入账号和密码");
+    }
+    else{
+        QString username = this->ui->usernameEdit->text();//qDebug()<<username;
+        QString password = strMd5(this->ui->passwordEdit->text());//qDebug()<<password;
+        try{
+            if(!connectDB()){
+                throw QString("no connection");
+                qDebug()<<"db error";
             }
+            else{
+                QSqlQuery query;
+                QString sql = QString("select * from user where username='%1'").arg(username);
+                query.exec(sql);
+                while(query.next()){
+                    if(query.value(2).toString() == password ){
+                        this->ui->warning->setText("登陆成功");
+                        this->hide();
+                        MainWindow *w = new MainWindow();
+                        w->show();
+                        break;
+                    }
+                }
+                this->ui->warning->setText("请输入正确的账号密码");
+            }
+        }catch(QString ex){
+            qDebug()<<ex;
+            this->ui->warning->setText("无网络");
         }
-    }catch(QString ex){
-        qDebug()<<ex;
-        this->ui->warning->setText("无网络");
     }
 }
 

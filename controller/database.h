@@ -2,16 +2,23 @@
 #define DATABASE_H
 
 #include <qsqldatabase.h>
+#include <QDebug>
 
-class Database
-{
-private:
-    QSqlDatabase m_db;
-public:
-    Database();
-    // 连接数据库
-    bool connectDB();
-    QSqlDatabase getDatabase();
-};
+static bool connectDB(){
+    // 添加连接
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL" );
+    // 连接设置
+    db.setHostName("localhost");
+    db.setDatabaseName("pr");
+    db.setUserName("root");
+    db.setPassword("357721012ZX");
+    // 打开数据库
+    if(!db.open())
+    {
+        qDebug()<<"db connection error";
+        return false;
+    }
+    return true;
+}
 
 #endif // DATABASE_H
