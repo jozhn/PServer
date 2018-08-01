@@ -141,3 +141,13 @@ void MainWindow::closeEvent(QCloseEvent *e)
 //    else
 //        qDebug()<<"error";
 //}
+
+void MainWindow::on_refreshSuccess_clicked()
+{
+    initSuccessTable();
+}
+
+void MainWindow::on_refreshFail_clicked()
+{
+    initFailTable();
+}
