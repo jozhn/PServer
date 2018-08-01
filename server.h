@@ -10,6 +10,7 @@
 #include <QVariant>
 #include <QMessageBox>
 #include <QCryptographicHash>
+#include "controller/fileutil.h"
 
 class Server : public QTcpServer
 {
@@ -24,18 +25,16 @@ protected:
 	void incomingConnection(int handle);
 
 signals:
-
+    void updateTable();
 public slots:
 	void displayError(int);
+    void started();
 	void finished();
     //void newConnect();
     //void readMessages();
 private:
-
     //void sendMessages(QString msg);
-
     //bool verify(QString msg);
-
 
 };
 

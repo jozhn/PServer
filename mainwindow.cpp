@@ -11,11 +11,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowIcon(QIcon(":/qss/app.png"));
     setWindowTitle("Server");
-
+    model = new QSqlQueryModel(this);
+    fileUtil = new FileUtil();
     server = new Server;
     sourcePic = new QImage;
     resultPic = new QImage;
-
+    initUnrecTable();
 }
 
 MainWindow::~MainWindow()
@@ -25,17 +26,45 @@ MainWindow::~MainWindow()
     delete resultPic;
 }
 
+void MainWindow::ResizeTableView(QTableView *tableview)
+{
+    tableview->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//自适应列宽
+    tableview->resizeRowsToContents();//最小行高
+}
+
+void MainWindow::initUnrecTable()
+{
+    fileUtil->setModel();
+    model = fileUtil->getModel();
+    model->setHeaderData(1, Qt::Horizontal, tr("文件名"));
+    model->setHeaderData(2, Qt::Horizontal, tr("文件大小"));
+    model->setHeaderData(3, Qt::Horizontal, tr("类型"));
+    model->setHeaderData(5, Qt::Horizontal, tr("接收状态"));
+    ResizeTableView(ui->unrecTableView);
+    ui->unrecTableView->setModel(model);
+    ui->unrecTableView->hideColumn(0);
+    ui->unrecTableView->hideColumn(4);
+    ui->unrecTableView->hideColumn(6);
+    ui->unrecTableView->hideColumn(7);
+}
+
 void MainWindow::on_startService_clicked()
 {
     quint16 port = ui->portEdit->text().toUInt();
     server->startServer(port);
     ui->statusEdit->setText("开始监听localhost "+QString::number(port)+"端口");
+    connect(server, SIGNAL(updateTable()), this, SLOT(on_refreshUnrec_clicked()));
 }
 
 void MainWindow::on_stopService_clicked()
 {
     server->stopServer();
     ui->statusEdit->setText("服务端停止");
+}
+
+void MainWindow::on_refreshUnrec_clicked()
+{
+    initUnrecTable();
 }
 
 //void MainWindow::on_testButton_clicked()
@@ -57,3 +86,4 @@ void MainWindow::on_stopService_clicked()
 //    else
 //        qDebug()<<"error";
 //}
+

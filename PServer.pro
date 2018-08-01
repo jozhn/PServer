@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     thirdparty/textDetect/erfilter.cpp \
     thirdparty/xmlParser/xmlParser.cpp \
     server.cpp \
-    serverthread.cpp
+    serverthread.cpp \
+    controller/fileutil.cpp
 
 HEADERS  += mainwindow.h \
     qss/qss.h \
@@ -84,7 +85,8 @@ HEADERS  += mainwindow.h \
     thirdparty/xmlParser/xmlParser.h \
     controller/database.h \
     server.h \
-    serverthread.h
+    serverthread.h \
+    controller/fileutil.h
 
 FORMS    += mainwindow.ui \
     login.ui
