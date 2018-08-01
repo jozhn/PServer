@@ -87,7 +87,7 @@
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget">
              <property name="currentIndex">
-              <number>2</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="tab">
               <attribute name="title">
@@ -226,6 +226,13 @@
            <string>Result</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
+           <item row="2" column="0">
+            <widget class="QLabel" name="reason">
+             <property name="text">
+              <string>违章原因</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="plateColor">
              <property name="text">
@@ -246,25 +253,89 @@
            <item row="1" column="1">
             <widget class="QLineEdit" name="plateStrEdit"/>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="reason">
-             <property name="text">
-              <string>违章原因</string>
-             </property>
-            </widget>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="locationEdit"/>
            </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="reasonEdit"/>
-           </item>
-           <item row="3" column="0">
+           <item row="5" column="0">
             <widget class="QLabel" name="location">
              <property name="text">
               <string>违章地点</string>
              </property>
             </widget>
            </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="points">
+             <property name="text">
+              <string>扣分</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="reasonBox"/>
+           </item>
            <item row="3" column="1">
-            <widget class="QLineEdit" name="locationEdit"/>
+            <widget class="QLineEdit" name="pointsEdit"/>
+           </item>
+           <item row="6" column="0" colspan="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QPushButton" name="lastRec">
+               <property name="text">
+                <string>上一张</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="spacer1">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="saveResult">
+               <property name="text">
+                <string>保存</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="spacer2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="nextRec">
+               <property name="text">
+                <string>下一张</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="fine">
+             <property name="text">
+              <string>罚款</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="fineEdit"/>
            </item>
           </layout>
          </widget>
@@ -290,7 +361,7 @@
             <widget class="QLineEdit" name="carownerEdit"/>
            </item>
            <item row="0" column="3">
-            <spacer name="horizontalSpacer">
+            <spacer name="spacer3">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -333,7 +404,7 @@
             <widget class="QLineEdit" name="idcardEdit"/>
            </item>
            <item row="2" column="3">
-            <spacer name="horizontalSpacer_2">
+            <spacer name="spacer4">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>

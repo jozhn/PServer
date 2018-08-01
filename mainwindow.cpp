@@ -151,3 +151,8 @@ void MainWindow::on_refreshFail_clicked()
 {
     initFailTable();
 }
+
+void MainWindow::on_successTableView_clicked(const QModelIndex &index)
+{
+
+}

@@ -29,6 +29,9 @@ private slots:
     void on_stopService_clicked();
     void on_refreshUnrec_clicked();
     void on_recognizeAll_clicked();
+    void on_refreshSuccess_clicked();
+    void on_refreshFail_clicked();
+    void on_successTableView_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
