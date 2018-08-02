@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     thirdparty/xmlParser/xmlParser.cpp \
     server.cpp \
     serverthread.cpp \
-    controller/fileutil.cpp
+    controller/fileutil.cpp \
+    entity/platerecord.cpp
 
 HEADERS  += mainwindow.h \
     qss/qss.h \
@@ -86,7 +87,8 @@ HEADERS  += mainwindow.h \
     controller/database.h \
     server.h \
     serverthread.h \
-    controller/fileutil.h
+    controller/fileutil.h \
+    entity/platerecord.h
 
 FORMS    += mainwindow.ui \
     login.ui

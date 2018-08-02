@@ -87,7 +87,7 @@
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab">
               <attribute name="title">
@@ -226,6 +226,9 @@
            <string>Result</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="plateColorEdit"/>
+           </item>
            <item row="2" column="0">
             <widget class="QLabel" name="type">
              <property name="text">
@@ -240,9 +243,6 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="plateColorEdit"/>
-           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="plateStr">
              <property name="text">
@@ -250,11 +250,14 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="plateStrEdit"/>
-           </item>
            <item row="5" column="1">
             <widget class="QLineEdit" name="locationEdit"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="typeBox"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="plateStrEdit"/>
            </item>
            <item row="5" column="0">
             <widget class="QLabel" name="location">
@@ -269,12 +272,6 @@
               <string>扣分</string>
              </property>
             </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QComboBox" name="typeBox"/>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="pointsEdit"/>
            </item>
            <item row="6" column="0" colspan="2">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -336,6 +333,9 @@
            </item>
            <item row="4" column="1">
             <widget class="QLineEdit" name="fineEdit"/>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="pointsEdit"/>
            </item>
           </layout>
          </widget>

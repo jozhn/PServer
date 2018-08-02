@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "controller/recogize.h"
 #include <QDebug>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent) :
     QssMainWindow(parent),
@@ -21,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     initUnrecTable();
     initSuccessTable();
     initFailTable();
+    fileUtil->addType(ui->typeBox);
 }
 
 MainWindow::~MainWindow()
@@ -102,14 +104,14 @@ void MainWindow::on_recognizeAll_clicked()
     query.exec(sql);
     int fileId,type;QString fileName,location;
     while(query.next()){
-        fileId = query.value("id").toInt();qDebug()<<fileId;
-        fileName = query.value("filename").toString();qDebug()<<fileName;
-        type = query.value("type").toInt();qDebug()<<type;
-        location = query.value("location").toString();qDebug()<<location;
+        fileId = query.value("id").toInt();//qDebug()<<fileId;
+        fileName = query.value("filename").toString();//qDebug()<<fileName;
+        type = query.value("type").toInt();//qDebug()<<type;
+        location = query.value("location").toString();//qDebug()<<location;
         if(r->rec("E:/source/",fileName)){
-            fileUtil->addSuccessRec(fileId,r->plateColor,r->plateNum,type,location);
+            fileUtil->addSuccessRec(fileId,r->plateColor,r->plateNum,type,location,QDateTime::currentDateTime());
         }else{
-            fileUtil->addFailRec(fileId,type,location);
+            fileUtil->addFailRec(fileId,type,location,QDateTime::currentDateTime());
         }
     }
     initUnrecTable();
@@ -154,5 +156,21 @@ void MainWindow::on_refreshFail_clicked()
 
 void MainWindow::on_successTableView_clicked(const QModelIndex &index)
 {
-
+    int row=ui->successTableView->currentIndex().row();
+    if(row!=-1){
+        int fileId = ui->successTableView->model()->data(ui->successTableView->model()->index(row,0)).toInt();
+        PlateRecord pr = fileUtil->getPlateRecord(fileId);
+        sourcePic->load("E:/source/"+pr.fileName);
+        resultPic->load("E:/result/"+pr.fileName);
+        int width = ui->sourceLabel->width();int height = ui->sourceLabel->height();
+        ui->sourceLabel->setPixmap(QPixmap::fromImage(*sourcePic).scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+        width = ui->resultLabel->width();height = ui->resultLabel->height();
+        ui->resultLabel->setPixmap(QPixmap::fromImage(*resultPic).scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+        ui->plateColorEdit->setText(pr.plateColor);
+        ui->plateStrEdit->setText(pr.plateNum);
+        ui->typeBox->setCurrentIndex(pr.type);
+        ui->pointsEdit->setText(QString::number(pr.points));
+        ui->fineEdit->setText(QString::number(pr.fine));
+        ui->locationEdit->setText(pr.location);
+    }
 }
