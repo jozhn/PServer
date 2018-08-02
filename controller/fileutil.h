@@ -7,8 +7,8 @@ class FileUtil
 {
 public:
     FileUtil();
-    bool addSuccessRec(int file_id, QString plate_color, QString plate_num, QString type, QString location);
-    bool addFailRec(int file_id, QString type, QString location);
+    bool addSuccessRec(int file_id, QString plate_color, QString plate_num, int type, QString location);
+    bool addFailRec(int file_id, int type, QString location);
     bool deleteItem();
     bool updateItem();
     bool deleteAll();

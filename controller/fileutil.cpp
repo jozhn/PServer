@@ -7,7 +7,7 @@ FileUtil::FileUtil()
 {
 }
 
-bool FileUtil::addSuccessRec(int file_id,QString plate_color,QString plate_num,QString type,QString location)
+bool FileUtil::addSuccessRec(int file_id,QString plate_color,QString plate_num,int type,QString location)
 {
     QSqlQuery query,update;
     query.prepare("insert into rec_record (file_id,plate_color,plate_num,type,location) "
@@ -27,7 +27,7 @@ bool FileUtil::addSuccessRec(int file_id,QString plate_color,QString plate_num,Q
         return false;
 }
 
-bool FileUtil::addFailRec(int file_id,QString type,QString location)
+bool FileUtil::addFailRec(int file_id, int type, QString location)
 {
     QSqlQuery query,update;
     query.prepare("insert into rec_record (file_id,type,location) "
@@ -70,21 +70,22 @@ bool FileUtil::deleteAll()
 void FileUtil::setUnrecModel()
 {
     model = new QSqlQueryModel;
-    model->setQuery("SELECT id,filename,type,location,receive_state FROM send_record where rec_state='待识别'");
+    model->setQuery("SELECT s.id,s.filename,t.type,s.location,s.receive_state FROM send_record s,type t "
+                    "where s.type=t.id and s.rec_state='待识别' and s.receive_flag=0");
 }
 
 void FileUtil::setSuccessModel()
 {
     model = new QSqlQueryModel;
-    model->setQuery("SELECT id,filename,type,location,receive_state FROM send_record where rec_state='识别成功' and receive_flag=0");
-//    model->setQuery("SELECT id,plate_color,plate_num,type,location FROM rec_record where rec_state='识别成功'");
+    model->setQuery("SELECT s.id,s.filename,t.type,s.location,s.receive_state FROM send_record s,type t "
+                    "where s.type=t.id and s.rec_state='识别成功' and s.receive_flag=0");
 }
 
 void FileUtil::setFailModel()
 {
     model = new QSqlQueryModel;
-    model->setQuery("SELECT id,filename,type,location,receive_state FROM send_record where rec_state='识别失败'");
-//    model->setQuery("SELECT id,plate_color,plate_num,type,location FROM rec_record where rec_state='识别失败'");
+    model->setQuery("SELECT s.id,s.filename,t.type,s.location,s.receive_state FROM send_record s,type t "
+                    "where s.type=t.id and s.rec_state='识别失败' and s.receive_flag=0");
 }
 
 QSqlQueryModel *FileUtil::getModel()

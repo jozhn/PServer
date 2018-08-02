@@ -100,11 +100,11 @@ void MainWindow::on_recognizeAll_clicked()
     Recogize *r = new Recogize();
     QString sql = "select * from send_record where receive_state='已接收' and rec_state='待识别'";
     query.exec(sql);
-    int fileId;QString fileName,type,location;
+    int fileId,type;QString fileName,location;
     while(query.next()){
         fileId = query.value("id").toInt();qDebug()<<fileId;
         fileName = query.value("filename").toString();qDebug()<<fileName;
-        type = query.value("type").toString();qDebug()<<type;
+        type = query.value("type").toInt();qDebug()<<type;
         location = query.value("location").toString();qDebug()<<location;
         if(r->rec("E:/source/",fileName)){
             fileUtil->addSuccessRec(fileId,r->plateColor,r->plateNum,type,location);
