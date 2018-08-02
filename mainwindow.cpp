@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowIcon(QIcon(":/qss/app.png"));
     setWindowTitle("Server");
+    row = 0;
     unrecModel = new QSqlQueryModel(this);
     successModel = new QSqlQueryModel(this);
     failModel = new QSqlQueryModel(this);
@@ -124,26 +125,6 @@ void MainWindow::closeEvent(QCloseEvent *e)
     fileUtil->deleteAll();
 }
 
-//void MainWindow::on_testButton_clicked()
-//{
-//    Recogize *r = new Recogize();
-//    QString dir = "E://";
-//    QString filename = "test.jpg";
-//    if(r->rec(dir,filename)){
-//        qDebug()<<"ok";
-//        ui->plateColorEdit->setText(r->plateColor);
-//        ui->plateStrEdit->setText(r->plateNum);
-//        sourcePic->load(r->sourcePath);
-//        resultPic->load(r->resultPath);
-//        int width = ui->sourceLabel->width();int height = ui->sourceLabel->height();
-//        ui->sourceLabel->setPixmap(QPixmap::fromImage(*sourcePic).scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-//        width = ui->resultLabel->width();height = ui->resultLabel->height();
-//        ui->resultLabel->setPixmap(QPixmap::fromImage(*resultPic).scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-//    }
-//    else
-//        qDebug()<<"error";
-//}
-
 void MainWindow::on_refreshSuccess_clicked()
 {
     initSuccessTable();
@@ -156,9 +137,9 @@ void MainWindow::on_refreshFail_clicked()
 
 void MainWindow::on_successTableView_clicked(const QModelIndex &index)
 {
-    int row=ui->successTableView->currentIndex().row();
+    row = index.row();
     if(row!=-1){
-        int fileId = ui->successTableView->model()->data(ui->successTableView->model()->index(row,0)).toInt();
+        int fileId = ui->successTableView->model()->data( ui->successTableView->model()->index(row,0) ).toInt();
         PlateRecord pr = fileUtil->getPlateRecord(fileId);
         sourcePic->load("E:/source/"+pr.fileName);
         resultPic->load("E:/result/"+pr.fileName);
@@ -172,5 +153,25 @@ void MainWindow::on_successTableView_clicked(const QModelIndex &index)
         ui->pointsEdit->setText(QString::number(pr.points));
         ui->fineEdit->setText(QString::number(pr.fine));
         ui->locationEdit->setText(pr.location);
+    }
+}
+
+void MainWindow::on_lastRec_clicked()
+{
+    if(row!=-1 && (row-1)>=0){
+        row--;
+        QModelIndex index = ui->successTableView->model()->index(row,1);
+        ui->successTableView->setCurrentIndex(index);
+        on_successTableView_clicked(index);
+    }
+}
+
+void MainWindow::on_nextRec_clicked()
+{
+    if(row!=-1 && (row+1)<ui->successTableView->model()->rowCount()){
+        row++;
+        QModelIndex index = ui->successTableView->model()->index(row,1);
+        ui->successTableView->setCurrentIndex(index);
+        on_successTableView_clicked(index);
     }
 }

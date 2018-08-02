@@ -32,6 +32,8 @@ private slots:
     void on_refreshSuccess_clicked();
     void on_refreshFail_clicked();
     void on_successTableView_clicked(const QModelIndex &index);
+    void on_lastRec_clicked();
+    void on_nextRec_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -41,6 +43,7 @@ private:
     QSqlQueryModel *successModel;
     QSqlQueryModel *failModel;
     void closeEvent(QCloseEvent *e);
+    int row;
 };
 
 #endif // MAINWINDOW_H
