@@ -10,7 +10,7 @@ FileUtil::FileUtil()
 void FileUtil::addType(QComboBox *typebox)
 {
     QSqlQuery query;
-    QString sql = QString("select * from type");
+    QString sql = QString("select * from type order by id ASC");
     query.exec(sql);
     int i=0,id;QString type;
     while(query.next()){
@@ -86,9 +86,16 @@ bool FileUtil::deleteItem()
 
 }
 
-bool FileUtil::updateItem()
+bool FileUtil::updateItem(QString fileName)
 {
-
+    QSqlQuery query;
+    QString sql = QString("update send_record set receive_state='已接收' where filename='%1'").arg(fileName);
+    bool success = query.exec(sql);
+    if(success){
+        return true;
+    }
+    else
+        return false;
 }
 
 bool FileUtil::deleteAll()

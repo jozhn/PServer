@@ -36,17 +36,17 @@ void Server::incomingConnection(int handle)
 
 void Server::displayError(int e)
 {
-    qDebug() << "The clientThread have a error. " << e << ".";
+    qDebug() << "The serverThread have a error. " << e << ".";
 }
 
 void Server::started()
 {
-    qDebug() << "a clientThread started.";
+    qDebug() << "a serverThread started.";
     emit updateTable();
 }
 
 void Server::finished()
 {
-	qDebug() << "a clientThread finished.";
+    qDebug() << "a serverThread finished.";
     emit updateTable();
 }

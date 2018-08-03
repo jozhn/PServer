@@ -87,7 +87,7 @@
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab">
               <attribute name="title">
@@ -262,7 +262,7 @@
            <item row="5" column="0">
             <widget class="QLabel" name="location">
              <property name="text">
-              <string>违章地点</string>
+              <string>地点</string>
              </property>
             </widget>
            </item>

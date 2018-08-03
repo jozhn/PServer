@@ -15,7 +15,7 @@ public:
     bool addFailRec(int file_id, int type, QString location, QDateTime datetime);
     PlateRecord getPlateRecord(int fileId);
     bool deleteItem();
-    bool updateItem();
+    bool updateItem(QString fileName);
     bool deleteAll();
     void setUnrecModel();
     void setSuccessModel();

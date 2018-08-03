@@ -10,9 +10,7 @@
 #include <QFile>
 #include <QString>
 #include <QDir>
-
-
-
+#include <controller/fileutil.h>
 
 class serverThread : public QThread
 {
@@ -26,7 +24,7 @@ protected:
 	void run();
 
 signals:
-	void error(int);
+    void error(int);
 
 public slots:
 	void on_socket_readyRead();
@@ -37,12 +35,13 @@ private:
 	QFile file;
     QFile *p_file;
 	QString fileName;
+    QString fname;
 	//QAbstractSocket s;
     QTcpSocket socket;
 	qint64 blockSize;
 	qint64 blockNumber;
-
     QDir my_dir;
+    FileUtil *fileUtil;
 
 
 };

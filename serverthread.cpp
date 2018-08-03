@@ -26,6 +26,7 @@ serverThread::serverThread(int h, QObject *parent) :
 	blockSize = 0;
 	blockNumber  = 0;
     socket.setSocketDescriptor(h);
+    fileUtil = new FileUtil();
     connect(&socket, SIGNAL(disconnected()), this, SLOT(on_socket_disconnected()));
     connect(&socket, SIGNAL(readyRead()), this, SLOT(on_socket_readyRead()));
     connect(&socket, SIGNAL(error(QAbstractSocket::SocketError)),
@@ -58,7 +59,8 @@ void serverThread::proccessData(QByteArray &array)
 	{
     //0x0001 16进制 无符型整数
 	case 0x0001:		// file name
-        fileName = "E:/source/"+fileName.fromUtf8(data.data(), data.size());
+        fname = fileName.fromUtf8(data.data(), data.size());
+        fileName = "E:/source/"+fname;
 
         //打开文件的方式有2种，一种是在构造函数中指定文件名
         //QFile file（“文件名”）
@@ -93,12 +95,11 @@ void serverThread::proccessData(QByteArray &array)
 		qDebug() << "File transt finished.";
         p_file->close();
         //socket断开连接
+        fileUtil->updateItem(fname);
         socket.disconnectFromHost();
-		//emit finished();
 		break;
 	default: ;
 	}
-
 }
 
 //线程的入口
