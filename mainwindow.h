@@ -36,9 +36,10 @@ private slots:
     void on_successTableView_clicked(const QModelIndex &index);
     void on_lastRec_clicked();
     void on_nextRec_clicked();
-    void on_initAll_clicked();
     void on_searchRecord_clicked();
-    void on_buttonFine_clicked();
+    void on_initRecordTable_clicked();
+    void on_doDeduction_clicked();
+
 private:
     Ui::MainWindow *ui;
     Server *server;

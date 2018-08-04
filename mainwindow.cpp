@@ -179,8 +179,13 @@ void MainWindow::on_nextRec_clicked()
     }
 }
 
+void MainWindow::on_searchRecord_clicked()
+{
+    on_initRecordTable_clicked();
+    personUtil->searchItem(ui->carownerEdit->text(),ui->platenumEdit->text(),ui->idcardEdit->text());
+}
 
-void MainWindow::on_initAll_clicked()
+void MainWindow::on_initRecordTable_clicked()
 {
     personUtil->setModel();
     personModel = personUtil->getModel();
@@ -195,23 +200,17 @@ void MainWindow::on_initAll_clicked()
     ui->recordTableView->hideColumn(0);
 }
 
-void MainWindow::on_searchRecord_clicked()
+void MainWindow::on_doDeduction_clicked()
 {
-    on_initAll_clicked();
-    personUtil->searchItem(ui->carownerEdit->text(),ui->platenumEdit->text(),ui->idcardEdit->text());
-}
-
-void MainWindow::on_buttonFine_clicked()
-{
-    on_initAll_clicked();
+    on_initRecordTable_clicked();
     recordRow=0;
     while(recordRow!=-1 && (recordRow+1)<=ui->recordTableView->model()->rowCount()){
-    QModelIndex index1=ui->recordTableView->model()->index(recordRow,5);
-    QString fineType=index1.data().toString();
-    qDebug()<<fineType;
-    personUtil->personFine(fineType);
-    recordRow++;
+        QModelIndex index1=ui->recordTableView->model()->index(recordRow,5);
+        QString fineType=index1.data().toString();
+        qDebug()<<fineType;
+        personUtil->personFine(fineType);
+        recordRow++;
     }
-//    QMessageBox::about("Fine","扣款完成");
-    QMessageBox::information(NULL, "Fine", "扣款完成", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    QssMessageBox::tips("扣款完成",this,tr("提示"));
+//    QMessageBox::information(NULL, "Fine", "扣款完成", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
