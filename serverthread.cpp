@@ -31,8 +31,6 @@ serverThread::serverThread(int h, QObject *parent) :
     connect(&socket, SIGNAL(readyRead()), this, SLOT(on_socket_readyRead()));
     connect(&socket, SIGNAL(error(QAbstractSocket::SocketError)),
 			this, SLOT(displaySocketError(QAbstractSocket::SocketError)));
-
-
 }
 
 void serverThread::proccessData(QByteArray &array)

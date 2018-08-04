@@ -3,6 +3,7 @@
 #include "controller/recogize.h"
 #include <QDebug>
 #include <QDateTime>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QssMainWindow(parent),
@@ -16,7 +17,9 @@ MainWindow::MainWindow(QWidget *parent) :
     unrecModel = new QSqlQueryModel(this);
     successModel = new QSqlQueryModel(this);
     failModel = new QSqlQueryModel(this);
+	personModel = new QSqlQueryModel(this);
     fileUtil = new FileUtil();
+	personUtil=new PersonUtil();
     server = new Server;
     sourcePic = new QImage;
     resultPic = new QImage;
@@ -174,4 +177,41 @@ void MainWindow::on_nextRec_clicked()
         ui->successTableView->setCurrentIndex(index);
         on_successTableView_clicked(index);
     }
+}
+
+
+void MainWindow::on_initAll_clicked()
+{
+    personUtil->setModel();
+    personModel = personUtil->getModel();
+    personModel->setHeaderData(1, Qt::Horizontal, tr("名字"));
+    personModel->setHeaderData(2, Qt::Horizontal, tr("身份证号"));
+    personModel->setHeaderData(3, Qt::Horizontal, tr("车牌号码"));
+    personModel->setHeaderData(4, Qt::Horizontal, tr("位置"));
+    personModel->setHeaderData(5, Qt::Horizontal, tr("违规类型"));
+    personModel->setHeaderData(6, Qt::Horizontal, tr("本金"));
+    ResizeTableView(ui->recordTableView);
+    ui->recordTableView->setModel(personModel);
+    ui->recordTableView->hideColumn(0);
+}
+
+void MainWindow::on_searchRecord_clicked()
+{
+    on_initAll_clicked();
+    personUtil->searchItem(ui->carownerEdit->text(),ui->platenumEdit->text(),ui->idcardEdit->text());
+}
+
+void MainWindow::on_buttonFine_clicked()
+{
+    on_initAll_clicked();
+    recordRow=0;
+    while(recordRow!=-1 && (recordRow+1)<=ui->recordTableView->model()->rowCount()){
+    QModelIndex index1=ui->recordTableView->model()->index(recordRow,5);
+    QString fineType=index1.data().toString();
+    qDebug()<<fineType;
+    personUtil->personFine(fineType);
+    recordRow++;
+    }
+//    QMessageBox::about("Fine","扣款完成");
+    QMessageBox::information(NULL, "Fine", "扣款完成", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }

@@ -6,6 +6,8 @@
 #include <QEvent>
 #include "qss/qss.h"
 #include "server.h"
+#include "controller/fileutil.h"
+#include "controller/personutil.h"
 
 namespace Ui {
 class MainWindow;
@@ -34,16 +36,20 @@ private slots:
     void on_successTableView_clicked(const QModelIndex &index);
     void on_lastRec_clicked();
     void on_nextRec_clicked();
-
+    void on_initAll_clicked();
+    void on_searchRecord_clicked();
+    void on_buttonFine_clicked();
 private:
     Ui::MainWindow *ui;
     Server *server;
     FileUtil *fileUtil;
+	PersonUtil *personUtil;
     QSqlQueryModel *unrecModel;
     QSqlQueryModel *successModel;
     QSqlQueryModel *failModel;
+	QSqlQueryModel *personModel;
     void closeEvent(QCloseEvent *e);
-    int row;
+    int row,recordRow;
 };
 
 #endif // MAINWINDOW_H
