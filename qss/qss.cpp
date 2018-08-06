@@ -249,7 +249,12 @@ QssMainWindow::~QssMainWindow()
 
 void QssMainWindow::show()
 {
-	m_frame->show();
+    m_frame->show();
+}
+
+void QssMainWindow::closeWindow()
+{
+    m_frame->close();
 }
 
 void QssMainWindow::showMinimized()

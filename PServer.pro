@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     serverthread.cpp \
     controller/fileutil.cpp \
     entity/platerecord.cpp \
-    controller/personutil.cpp
+    controller/personutil.cpp \
+    controller/recordutil.cpp
 
 HEADERS  += mainwindow.h \
     qss/qss.h \
@@ -90,7 +91,8 @@ HEADERS  += mainwindow.h \
     serverthread.h \
     controller/fileutil.h \
     entity/platerecord.h \
-    controller/personutil.h
+    controller/personutil.h \
+    controller/recordutil.h
 
 FORMS    += mainwindow.ui \
     login.ui

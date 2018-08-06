@@ -33,12 +33,17 @@ private slots:
     void on_recognizeAll_clicked();
     void on_refreshSuccess_clicked();
     void on_refreshFail_clicked();
+    void on_submitSuccess_clicked();
     void on_successTableView_clicked(const QModelIndex &index);
     void on_lastRec_clicked();
     void on_nextRec_clicked();
     void on_searchRecord_clicked();
     void on_initRecordTable_clicked();
     void on_doDeduction_clicked();
+
+    void on_saveResult_clicked();
+
+    void on_typeBox_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;

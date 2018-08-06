@@ -89,6 +89,7 @@ public:
 	virtual ~QssMainWindow();
 
 	void show();
+    void closeWindow();
 	void showMinimized();
 	void showMaximized();
 	void showFullScreen();

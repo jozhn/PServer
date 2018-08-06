@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "controller/recogize.h"
+#include "controller/recordutil.h"
 #include <QDebug>
 #include <QDateTime>
 #include <QMessageBox>
@@ -138,6 +139,15 @@ void MainWindow::on_refreshFail_clicked()
     initFailTable();
 }
 
+void MainWindow::on_submitSuccess_clicked()
+{
+    RecordUtil * util = new RecordUtil();
+    if(util->submitRecord(QDateTime::currentDateTime())){
+        initSuccessTable();
+        QssMessageBox::tips("提交成功",this,tr("提示"));
+    }
+}
+
 void MainWindow::on_successTableView_clicked(const QModelIndex &index)
 {
     row = index.row();
@@ -213,4 +223,34 @@ void MainWindow::on_doDeduction_clicked()
     }
     QssMessageBox::tips("扣款完成",this,tr("提示"));
 //    QMessageBox::information(NULL, "Fine", "扣款完成", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+}
+
+
+void MainWindow::on_saveResult_clicked()
+{
+    int currentrow = ui->successTableView->currentIndex().row();
+    if(currentrow==-1)
+        return;
+    int fileId = ui->successTableView->model()->data( ui->successTableView->model()->index(currentrow,0) ).toInt();
+    qDebug()<<fileId;
+    QString plate_color = ui->plateColorEdit->text();
+    QString plate_num = ui->plateStrEdit->text();
+    qDebug()<<plate_num;
+    int type = ui->typeBox->currentIndex();
+    QString location = ui->locationEdit->text();
+    RecordUtil * util = new RecordUtil();
+    if(util->save(fileId,plate_color,plate_num,type,location)){
+        QssMessageBox::tips("保存成功",this,tr("提示"));
+    }
+}
+
+void MainWindow::on_typeBox_currentIndexChanged(int index)
+{
+    qDebug()<<"test";
+    QSqlQuery query;
+    query.exec(QString("select points,fine from type where id=%1").arg(index));
+    while(query.next()){
+        ui->pointsEdit->setText(query.value("points").toString());
+        ui->fineEdit->setText(query.value("fine").toString());
+    }
 }

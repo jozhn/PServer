@@ -120,8 +120,8 @@ void FileUtil::setUnrecModel()
 void FileUtil::setSuccessModel()
 {
     model = new QSqlQueryModel;
-    model->setQuery("SELECT s.id,s.filename,t.type,s.location,s.receive_state FROM send_record s,type t "
-                    "where s.type=t.id and s.rec_state='识别成功' and s.receive_flag=0");
+    model->setQuery("SELECT s.id,s.filename,t.type,s.location,s.receive_state FROM send_record s,type t,rec_record r "
+                    "where s.type=t.id and s.rec_state='识别成功' and s.receive_flag=0 and r.flag=0 and s.id=r.file_id");
 }
 
 void FileUtil::setFailModel()
