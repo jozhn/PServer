@@ -1,4 +1,5 @@
-﻿#ifndef MAINWINDOW_H
+﻿void on_logout_clicked();
+#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -8,6 +9,7 @@
 #include "server.h"
 #include "controller/fileutil.h"
 #include "controller/personutil.h"
+#include "login.h"
 
 namespace Ui {
 class MainWindow;
@@ -45,6 +47,7 @@ private slots:
 
     void on_typeBox_currentIndexChanged(int index);
 
+    void on_logout_clicked();
 private:
     Ui::MainWindow *ui;
     Server *server;

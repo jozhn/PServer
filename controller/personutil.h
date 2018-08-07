@@ -13,9 +13,11 @@ public:
     bool searchItem(QString name, QString idcard, QString platenum);
     QSqlQueryModel *model;
     QSqlQuery query;
-    bool personFine(QString fineType);
-    bool execSql(int number, QString fineType);
+    bool personFine(int tyid,int typo);
+    bool execSql(int tyid, int typo);
 
+private slots:
+    void exportExcel(QTableView *tableview);
 };
 
 #endif // PERSONUTIL_H

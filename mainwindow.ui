@@ -61,6 +61,13 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="logout">
+               <property name="text">
+                <string>退出</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
@@ -350,6 +357,9 @@
            <string>Record</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_10">
+           <item row="3" column="0" colspan="4">
+            <widget class="QTableView" name="recordTableView"/>
+           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="carowner">
              <property name="text">
@@ -357,8 +367,12 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1" colspan="2">
-            <widget class="QLineEdit" name="carownerEdit"/>
+           <item row="1" column="0">
+            <widget class="QLabel" name="platenum">
+             <property name="text">
+              <string>车牌号码</string>
+             </property>
+            </widget>
            </item>
            <item row="0" column="3">
             <spacer name="spacer3">
@@ -376,29 +390,11 @@
              </property>
             </spacer>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="platenum">
-             <property name="text">
-              <string>车牌号码</string>
-             </property>
-            </widget>
+           <item row="0" column="1" colspan="2">
+            <widget class="QLineEdit" name="carownerEdit"/>
            </item>
            <item row="1" column="1" colspan="2">
             <widget class="QLineEdit" name="platenumEdit"/>
-           </item>
-           <item row="1" column="3">
-            <widget class="QPushButton" name="searchRecord">
-             <property name="text">
-              <string>查询</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="idcard">
-             <property name="text">
-              <string>驾照号码</string>
-             </property>
-            </widget>
            </item>
            <item row="2" column="1" colspan="2">
             <widget class="QLineEdit" name="idcardEdit"/>
@@ -419,20 +415,31 @@
              </property>
             </spacer>
            </item>
-           <item row="3" column="0" colspan="4">
-            <widget class="QTableView" name="recordTableView"/>
+           <item row="2" column="0">
+            <widget class="QLabel" name="idcard">
+             <property name="text">
+              <string>驾照号码</string>
+             </property>
+            </widget>
            </item>
-           <item row="4" column="0" colspan="2">
+           <item row="1" column="3">
+            <widget class="QPushButton" name="searchRecord">
+             <property name="text">
+              <string>查询</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0" colspan="2">
             <widget class="QPushButton" name="initRecordTable">
              <property name="text">
               <string>显示全部</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="2" colspan="2">
+           <item row="5" column="2" colspan="2">
             <widget class="QPushButton" name="doDeduction">
              <property name="text">
-              <string>一键扣款</string>
+              <string>一键扣分</string>
              </property>
             </widget>
            </item>

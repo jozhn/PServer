@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QMessageBox>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent) :
     QssMainWindow(parent),
@@ -203,11 +204,15 @@ void MainWindow::on_initRecordTable_clicked()
     personModel->setHeaderData(2, Qt::Horizontal, tr("身份证号"));
     personModel->setHeaderData(3, Qt::Horizontal, tr("车牌号码"));
     personModel->setHeaderData(4, Qt::Horizontal, tr("位置"));
-    personModel->setHeaderData(5, Qt::Horizontal, tr("违规类型"));
-    personModel->setHeaderData(6, Qt::Horizontal, tr("本金"));
+    personModel->setHeaderData(6, Qt::Horizontal, tr("违规类型"));
+    personModel->setHeaderData(8, Qt::Horizontal, tr("积分"));
+    personModel->setHeaderData(9, Qt::Horizontal, tr("罚款"));
+    personModel->setHeaderData(10, Qt::Horizontal, tr("是否扣分"));
     ResizeTableView(ui->recordTableView);
     ui->recordTableView->setModel(personModel);
     ui->recordTableView->hideColumn(0);
+    ui->recordTableView->hideColumn(5);
+    ui->recordTableView->hideColumn(7);
 }
 
 void MainWindow::on_doDeduction_clicked()
@@ -216,12 +221,15 @@ void MainWindow::on_doDeduction_clicked()
     recordRow=0;
     while(recordRow!=-1 && (recordRow+1)<=ui->recordTableView->model()->rowCount()){
         QModelIndex index1=ui->recordTableView->model()->index(recordRow,5);
-        QString fineType=index1.data().toString();
-        qDebug()<<fineType;
-        personUtil->personFine(fineType);
+        QModelIndex index2=ui->recordTableView->model()->index(recordRow,7);
+        int tyid=index1.data().toInt();
+        int typo=index2.data().toInt();
+        qDebug()<<tyid;
+        qDebug()<<typo;
+        personUtil->personFine(tyid,typo);
         recordRow++;
     }
-    QssMessageBox::tips("扣款完成",this,tr("提示"));
+    QssMessageBox::tips("扣分完成",this,tr("提示"));
 //    QMessageBox::information(NULL, "Fine", "扣款完成", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
@@ -253,4 +261,27 @@ void MainWindow::on_typeBox_currentIndexChanged(int index)
         ui->pointsEdit->setText(query.value("points").toString());
         ui->fineEdit->setText(query.value("fine").toString());
     }
+}
+
+void MainWindow::on_logout_clicked()
+{
+    QString path = QString("./user.ini");
+
+    //创建文件
+    QSettings * config =  new QSettings(path,QSettings::IniFormat);
+
+    //写入
+    config->beginGroup("config");
+    config->setValue("auto_states",QString::number(0));
+    config->endGroup();
+
+    Login *l=new Login();
+    l->show();
+    this->closeWindow();
+}
+
+void MainWindow::on_buttonExport_clicked()
+{
+    personUtil->exportExcel(ui->recordTableView);
+    QssMessageBox::tips("导出数据成功",this,tr("提示"));
 }
