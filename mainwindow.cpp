@@ -6,6 +6,9 @@
 #include <QDateTime>
 #include <QMessageBox>
 #include <QSettings>
+#include <QAxObject>
+#include <QStandardPaths>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QssMainWindow(parent),
@@ -40,8 +43,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::ResizeTableView(QTableView *tableview)
 {
+    tableview->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     tableview->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);//自适应列宽
-    tableview->resizeRowsToContents();//最小行高
+    tableview->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    tableview->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    //tableview->resizeRowsToContents();//最小行高
 }
 
 void MainWindow::initUnrecTable()
@@ -170,6 +176,26 @@ void MainWindow::on_successTableView_clicked(const QModelIndex &index)
     }
 }
 
+
+void MainWindow::on_failTableView_clicked(const QModelIndex &index)
+{
+    row = index.row();
+    if(row!=-1){
+        int fileId = ui->failTableView->model()->data( ui->failTableView->model()->index(row,0) ).toInt();
+        PlateRecord pr = fileUtil->getPlateRecord(fileId);
+        sourcePic->load("E:/source/"+pr.fileName);
+        int width = ui->sourceLabel->width();int height = ui->sourceLabel->height();
+        ui->sourceLabel->setPixmap(QPixmap::fromImage(*sourcePic).scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+        ui->resultLabel->clear();
+        ui->plateColorEdit->setText(pr.plateColor);
+        ui->plateStrEdit->setText(pr.plateNum);
+        ui->typeBox->setCurrentIndex(pr.type);
+        ui->pointsEdit->setText(QString::number(pr.points));
+        ui->fineEdit->setText(QString::number(pr.fine));
+        ui->locationEdit->setText(pr.location);
+    }
+}
+
 void MainWindow::on_lastRec_clicked()
 {
     if(row!=-1 && (row-1)>=0){
@@ -201,18 +227,17 @@ void MainWindow::on_initRecordTable_clicked()
     personUtil->setModel();
     personModel = personUtil->getModel();
     personModel->setHeaderData(1, Qt::Horizontal, tr("名字"));
-    personModel->setHeaderData(2, Qt::Horizontal, tr("身份证号"));
-    personModel->setHeaderData(3, Qt::Horizontal, tr("车牌号码"));
-    personModel->setHeaderData(4, Qt::Horizontal, tr("位置"));
-    personModel->setHeaderData(6, Qt::Horizontal, tr("违规类型"));
-    personModel->setHeaderData(8, Qt::Horizontal, tr("积分"));
-    personModel->setHeaderData(9, Qt::Horizontal, tr("罚款"));
-    personModel->setHeaderData(10, Qt::Horizontal, tr("是否扣分"));
+    personModel->setHeaderData(2, Qt::Horizontal, tr("驾照号"));
+    personModel->setHeaderData(3, Qt::Horizontal, tr("车牌号"));
+    personModel->setHeaderData(4, Qt::Horizontal, tr("地点"));
+    personModel->setHeaderData(6, Qt::Horizontal, tr("类型"));
+    personModel->setHeaderData(7, Qt::Horizontal, tr("扣分"));
+    personModel->setHeaderData(8, Qt::Horizontal, tr("罚款"));
+    personModel->setHeaderData(9, Qt::Horizontal, tr("是否扣分"));
     ResizeTableView(ui->recordTableView);
     ui->recordTableView->setModel(personModel);
     ui->recordTableView->hideColumn(0);
     ui->recordTableView->hideColumn(5);
-    ui->recordTableView->hideColumn(7);
 }
 
 void MainWindow::on_doDeduction_clicked()
@@ -230,16 +255,21 @@ void MainWindow::on_doDeduction_clicked()
         recordRow++;
     }
     QssMessageBox::tips("扣分完成",this,tr("提示"));
-//    QMessageBox::information(NULL, "Fine", "扣款完成", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
 
 void MainWindow::on_saveResult_clicked()
 {
-    int currentrow = ui->successTableView->currentIndex().row();
+    QTableView *tableview;
+    if(ui->tabWidget->currentIndex()==1)
+        tableview=ui->successTableView;
+    else if(ui->tabWidget->currentIndex()==2)
+        tableview=ui->failTableView;
+
+    int currentrow = tableview->currentIndex().row();
     if(currentrow==-1)
         return;
-    int fileId = ui->successTableView->model()->data( ui->successTableView->model()->index(currentrow,0) ).toInt();
+    int fileId = tableview->model()->data( tableview->model()->index(currentrow,0) ).toInt();
     qDebug()<<fileId;
     QString plate_color = ui->plateColorEdit->text();
     QString plate_num = ui->plateStrEdit->text();
@@ -249,12 +279,14 @@ void MainWindow::on_saveResult_clicked()
     RecordUtil * util = new RecordUtil();
     if(util->save(fileId,plate_color,plate_num,type,location)){
         QssMessageBox::tips("保存成功",this,tr("提示"));
+        initSuccessTable();
+        initFailTable();
+        tableview->setCurrentIndex( tableview->model()->index(currentrow,0) );
     }
 }
 
 void MainWindow::on_typeBox_currentIndexChanged(int index)
 {
-    qDebug()<<"test";
     QSqlQuery query;
     query.exec(QString("select points,fine from type where id=%1").arg(index));
     while(query.next()){
@@ -282,6 +314,58 @@ void MainWindow::on_logout_clicked()
 
 void MainWindow::on_buttonExport_clicked()
 {
-    personUtil->exportExcel(ui->recordTableView);
-    QssMessageBox::tips("导出数据成功",this,tr("提示"));
+    exportExcel(ui->recordTableView);
+}
+
+
+void MainWindow::exportExcel(QTableView *tableview)
+{
+    QString filePath = QFileDialog::getSaveFileName(this, "文件保存", QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
+                                                    "Excel 文件(*.xls *.xlsx)");
+    if(!filePath.isEmpty()){
+        qDebug()<<"connect successfully";
+        QAxObject *excel = new QAxObject(this);
+        excel->setControl("Excel.Application");//连接excel控件
+        excel->dynamicCall("SetVisible(bool Visible)", false);//不显示窗体
+        excel->setProperty("DisplayAlerts", false);//不显示任何警告信息。如果为true那么在关闭
+        QAxObject *workbooks = excel->querySubObject("WorkBooks");
+        workbooks->dynamicCall("Add");
+        QAxObject *workbook = excel->querySubObject("ActiveWorkBook");
+        QAxObject *worksheets = workbook->querySubObject("Sheets");
+        QAxObject *worksheet = worksheets->querySubObject("Item(int)", 1);
+        int rowCount = tableview->model()->rowCount();
+        int columnCount =  tableview->model()->columnCount();
+        QAxObject *cell,*col;
+        QString merge_cell=QString("A1:Z%1").arg(rowCount+2); // 设置单元格的属性
+        QAxObject *merge_range = worksheet->querySubObject("Range(const QString&)", merge_cell);
+        merge_range->setProperty("HorizontalAlignment", -4108); // 水平居中
+        merge_range->setProperty("VerticalAlignment", -4108);  // 垂直居中
+        merge_range->setProperty("NumberFormatLocal", "@");  // 设置为文本
+        //列标题
+        for(int i=0;i<columnCount;i++)
+        {
+            QString columnName;
+            columnName.append(QChar(i  + 'A'));
+            columnName.append(":");
+            columnName.append(QChar(i + 'A'));
+            col = worksheet->querySubObject("Columns(const QString&)", columnName);
+            cell=worksheet->querySubObject("Cells(int,int)", 1, i+1);
+            columnName=tableview->model()->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString();
+            cell->dynamicCall("SetValue(const QString&)", columnName);
+        }
+        for(int i = 0; i < rowCount; ++i){
+            for(int j =0 ; j < columnCount; ++j){
+                QModelIndex index = tableview->model()->index(i, j);
+                QString strdata=tableview->model()->data(index).toString();
+                worksheet->querySubObject("Cells(int,int)", i+2, j+1)->dynamicCall("SetValue(const QString&)", strdata);
+            }
+        }
+        workbook->dynamicCall("SaveAs(const QString &)", QDir::toNativeSeparators(filePath));
+        if(excel != NULL){
+            excel->dynamicCall("Quit()");
+            delete excel;
+            excel = NULL;
+        }
+        QssMessageBox::tips("导出数据成功",this,tr("提示"));
+    }
 }

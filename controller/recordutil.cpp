@@ -14,19 +14,19 @@ bool RecordUtil::submitRecord(QDateTime datetime)
                           "where r.flag=0 and r.type=t.id and r.plate_num = c.plate_num");
     query.exec(sql);
     int pid,points,fine;
-    QString type,location,car_num;
+    QString type,location,plate_num;
     while(query.next()){
         pid = query.value("pid").toInt();
         points = query.value("points").toInt();
         fine = query.value("fine").toInt();
         type = query.value("type").toString();
         location = query.value("location").toString();
-        car_num = query.value("plate_num").toString();
-        update.prepare("insert into fine_record (pid,car_num,type,points,fine,location,datetime) "
+        plate_num = query.value("plate_num").toString();
+        update.prepare("insert into fine_record (pid,plate_num,type,points,fine,location,datetime) "
                       "values "
-                      "(:pid,:car_num,:type,:points,:fine,:location,:datetime)");
+                      "(:pid,:plate_num,:type,:points,:fine,:location,:datetime)");
         update.bindValue(":pid",pid);
-        update.bindValue(":car_num",car_num);
+        update.bindValue(":plate_num",plate_num);
         update.bindValue(":type",type);
         update.bindValue(":points",points);
         update.bindValue(":fine",fine);
@@ -42,11 +42,6 @@ bool RecordUtil::submitRecord(QDateTime datetime)
 
 bool RecordUtil::save(int fileId, QString plate_color, QString plate_num, int type, QString location)
 {
-    //    this->fielId = fileId;
-    //    this->plate_color = plate_color;
-    //    this->plate_num = plate_num;
-    //    this->type = type;
-    //    this->location = location;
         QSqlQuery query;
         query.prepare("update rec_record set plate_color=:plate_color,plate_num=:plate_num,type=:type,location=:location "
                               "where file_id = :file_id");

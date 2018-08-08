@@ -41,7 +41,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>东软高速收费系统客户端</string>
+    <string>东软高速收费系统服务端</string>
    </property>
   </widget>
   <widget class="QPushButton" name="login">
@@ -99,7 +99,7 @@
     <string>自动登录</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>80</x>

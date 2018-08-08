@@ -1,5 +1,4 @@
-﻿void on_logout_clicked();
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -27,6 +26,7 @@ public:
     void initUnrecTable();
     void initSuccessTable();
     void initFailTable();
+    void exportExcel(QTableView *tableview);
     void ResizeTableView(QTableView *tableview);
 private slots:
     void on_startService_clicked();
@@ -37,17 +37,16 @@ private slots:
     void on_refreshFail_clicked();
     void on_submitSuccess_clicked();
     void on_successTableView_clicked(const QModelIndex &index);
+    void on_failTableView_clicked(const QModelIndex &index);
     void on_lastRec_clicked();
     void on_nextRec_clicked();
     void on_searchRecord_clicked();
     void on_initRecordTable_clicked();
     void on_doDeduction_clicked();
-
     void on_saveResult_clicked();
-
     void on_typeBox_currentIndexChanged(int index);
-
     void on_logout_clicked();
+    void on_buttonExport_clicked();
 private:
     Ui::MainWindow *ui;
     Server *server;

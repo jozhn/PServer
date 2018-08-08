@@ -22,7 +22,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_11">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="mainLayout" stretch="3,2,2">
+     <layout class="QHBoxLayout" name="mainLayout" stretch="3,1,5">
       <item>
        <layout class="QVBoxLayout" name="left" stretch="1,1,8">
         <item>
@@ -61,13 +61,6 @@
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="logout">
-               <property name="text">
-                <string>退出</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
           </layout>
@@ -81,6 +74,13 @@
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="0" column="0">
             <widget class="QLineEdit" name="statusEdit"/>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="logout">
+             <property name="text">
+              <string>退出</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -429,19 +429,30 @@
              </property>
             </widget>
            </item>
-           <item row="5" column="0" colspan="2">
-            <widget class="QPushButton" name="initRecordTable">
-             <property name="text">
-              <string>显示全部</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="2" colspan="2">
-            <widget class="QPushButton" name="doDeduction">
-             <property name="text">
-              <string>一键扣分</string>
-             </property>
-            </widget>
+           <item row="4" column="0" colspan="4">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QPushButton" name="initRecordTable">
+               <property name="text">
+                <string>显示全部</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="doDeduction">
+               <property name="text">
+                <string>一键扣分</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="buttonExport">
+               <property name="text">
+                <string>导出记录</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

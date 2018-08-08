@@ -1,7 +1,8 @@
-#ifndef PERSONUTIL_H
+﻿#ifndef PERSONUTIL_H
 #define PERSONUTIL_H
 #include <QSqlQueryModel>
 #include <QSqlQuery>
+#include <QTableView>
 #include "database.h"
 class PersonUtil
 {
@@ -15,9 +16,6 @@ public:
     QSqlQuery query;
     bool personFine(int tyid,int typo);
     bool execSql(int tyid, int typo);
-
-private slots:
-    void exportExcel(QTableView *tableview);
 };
 
 #endif // PERSONUTIL_H

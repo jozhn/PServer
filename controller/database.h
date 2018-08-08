@@ -11,7 +11,7 @@ static bool connectDB(){
     db.setHostName("localhost");
     db.setDatabaseName("pr");
     db.setUserName("root");
-    db.setPassword("123456");
+    db.setPassword("357721012ZX");
     // 打开数据库
     if(!db.open())
     {

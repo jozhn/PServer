@@ -15,7 +15,7 @@ Login::Login(QWidget *parent) :
     ui->setupUi(this);
     ui->usernameEdit->setFocus();
     setWindowIcon(QIcon(":/qss/app.png"));
-    setWindowTitle("Client");
+    setWindowTitle("Server");
 
       QString username;
        QString password;
