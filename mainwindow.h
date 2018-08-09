@@ -36,6 +36,7 @@ private slots:
     void on_refreshSuccess_clicked();
     void on_refreshFail_clicked();
     void on_submitSuccess_clicked();
+    void on_deleteFail_clicked();
     void on_successTableView_clicked(const QModelIndex &index);
     void on_failTableView_clicked(const QModelIndex &index);
     void on_lastRec_clicked();

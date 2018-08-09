@@ -58,41 +58,13 @@ bool PersonUtil::searchItem(QString name, QString platenum, QString idcard)
 
 bool PersonUtil::personFine(int tyid,int typo)
 {
-    qDebug()<<QString::number(tyid)+"id";
-    qDebug()<<QString::number(typo)+"po";
     if(NULL!=tyid){
-         if(tyid==1||tyid==2)
-         {
-            execSql(tyid,typo);
-          }
-         else if(tyid==3||tyid==4||tyid==5)
-         {
-             execSql(tyid,typo);
-         }
-         else if(tyid==6||tyid==7)
-         {
-             execSql(tyid,typo);
-         }
-         else if(tyid==8)
-         {
-             execSql(tyid,typo);
-         }
-         else if(tyid==9)
-         {
-             execSql(tyid,typo);
-         }
-         else if(tyid==10)
-         {
-             execSql(tyid,typo);
-         }
-         else if(tyid==11)
-         {
-              execSql(tyid,typo);
-         }
+        return execSql(tyid,typo);
      }
     else
     {
         qDebug()<<"违规类型错误";
+        return false;
     }
 }
 
@@ -101,7 +73,8 @@ bool PersonUtil::execSql(int tyid,int typo)
     QString q=QString("update person p,car c,rec_record r,type t,fine_record f "
                       "set f.flag='已扣',p.points=p.points-'%1' "
                       "where p.id=c.pid and c.plate_num=r.plate_num and r.type=t.id and t.id='%3' ").arg(typo).arg(tyid);
-    query.exec(q);
+    if(query.exec(q))
+        return true;
 }
 
 void PersonUtil::setModel()

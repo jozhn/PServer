@@ -110,25 +110,41 @@ bool FileUtil::deleteAll()
         return false;
 }
 
+bool FileUtil::deleteFail()
+{
+    QSqlQuery query,update;
+    QString sql = "select * from send_record where rec_state='识别失败'";
+    query.exec(sql);
+    int fileId;
+    while(query.next()){
+        fileId = query.value("id").toInt();
+        if(!update.exec(QString("delete from rec_record where file_id=%1").arg(fileId))){
+            return false;
+        }
+        update.exec(QString("delete from send_record where id=%1").arg(fileId));
+    }
+    return true;
+}
+
 void FileUtil::setUnrecModel()
 {
     model = new QSqlQueryModel;
     model->setQuery("SELECT s.id,s.filename,t.type,s.location,s.receive_state FROM send_record s,type t "
-                    "where s.type=t.id and s.rec_state='待识别' and s.receive_flag=0");
+                    "where s.type=t.id and s.rec_state='待识别' and s.receive_flag=0 ORDER BY s.datetime ASC");
 }
 
 void FileUtil::setSuccessModel()
 {
     model = new QSqlQueryModel;
     model->setQuery("SELECT s.id,s.filename,t.type,r.location,s.receive_state FROM send_record s,type t,rec_record r "
-                    "where r.type=t.id and s.rec_state='识别成功' and s.receive_flag=0 and r.flag=0 and s.id=r.file_id");
+                    "where r.type=t.id and s.rec_state='识别成功' and s.receive_flag=0 and r.flag=0 and s.id=r.file_id ORDER BY s.datetime ASC");
 }
 
 void FileUtil::setFailModel()
 {
     model = new QSqlQueryModel;
     model->setQuery("SELECT s.id,s.filename,t.type,r.location,s.receive_state FROM send_record s,type t,rec_record r "
-                    "where r.type=t.id and s.rec_state='识别失败' and s.receive_flag=0 and r.flag=0 and s.id=r.file_id");
+                    "where r.type=t.id and s.rec_state='识别失败' and s.receive_flag=0 and r.flag=0 and s.id=r.file_id ORDER BY s.datetime ASC");
 }
 
 QSqlQueryModel *FileUtil::getModel()

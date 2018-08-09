@@ -307,6 +307,7 @@ void MainWindow::on_logout_clicked()
     config->setValue("auto_states",QString::number(0));
     config->endGroup();
 
+    server->stopServer();
     Login *l=new Login();
     l->show();
     this->closeWindow();
@@ -368,4 +369,10 @@ void MainWindow::exportExcel(QTableView *tableview)
         }
         QssMessageBox::tips("导出数据成功",this,tr("提示"));
     }
+}
+
+void MainWindow::on_deleteFail_clicked()
+{
+    if(fileUtil->deleteFail())
+        QssMessageBox::tips("清除成功",this,tr("提示"));
 }

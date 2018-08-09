@@ -32,9 +32,12 @@ bool Recogize::rec(QString dir, QString f)
       size_t num = plateVec.size();
       for (size_t j = 0; j < num; j++) {
         String pstr = plateVec[j].getPlateStr();
-        plateStr = QString::fromLocal8Bit(pstr.c_str());qDebug()<<plateStr;
-        plateColor = plateStr.section(":",0,0);qDebug()<<plateColor;
-        plateNum = plateStr.section(":",1,1);qDebug()<<plateNum;
+        plateStr = QString::fromLocal8Bit(pstr.c_str());
+        //qDebug()<<plateStr;
+        plateColor = plateStr.section(":",0,0);
+        //qDebug()<<plateColor;
+        plateNum = plateStr.section(":",1,1);
+        //qDebug()<<plateNum;
         if(!plateNum.isEmpty()){
             resultPath = "E://result//"+f;
             String rpath = String((const char *)resultPath.toLocal8Bit());

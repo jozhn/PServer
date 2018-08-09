@@ -17,6 +17,7 @@ public:
     bool deleteItem();
     bool updateItem(QString fileName);
     bool deleteAll();
+    bool deleteFail();
     void setUnrecModel();
     void setSuccessModel();
     void setFailModel();
